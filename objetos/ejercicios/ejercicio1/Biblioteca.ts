@@ -40,6 +40,10 @@ class Biblioteca {
             throw new Error("No se encontro");
         }
 
+        if (socio.deuda > 0) {
+            throw new Error(`El socio ${socio.nombreCompleto} tiene deuda pendiente de $${socio.deuda}`);
+        }
+
         for(const socio of this.socios) {
             if (socio.tienePrestadoLibro(libro)) {
                 throw new Error("Libro no disponible")
@@ -63,6 +67,17 @@ class Biblioteca {
         }
 
         socio.devolver(libro);
+
+        if(libro.tieneReservas()) {
+            const siguienteSocio = libro.obtenerProximaReserva();
+            if (siguienteSocio) {
+                siguienteSocio.retirar(libro, this.DURACION);
+                libro.marcarComoPrestado();
+                console.log(`Aviso: ${siguienteSocio.nombreCompleto} recibió el libro reservado "${libro.titulo}"`);
+            } else {
+                libro.marcarComoDisponible();
+            }
+        }
     }   
     
     consultarEstadoLibro(libroIsbn: string): string {
