@@ -148,4 +148,8 @@ export class SocioFactory {
         throw new Error("Tipo de socio no valido");
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d906e65c3dbf44a0322ccff800f969c89bc42256

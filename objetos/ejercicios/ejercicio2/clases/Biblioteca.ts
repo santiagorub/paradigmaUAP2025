@@ -64,4 +64,8 @@ class Biblioteca {
 }
 
 export const biblioteca = new Biblioteca();
+<<<<<<< HEAD
 export type { Biblioteca };
+=======
+export type { Biblioteca };
+>>>>>>> d906e65c3dbf44a0322ccff800f969c89bc42256
