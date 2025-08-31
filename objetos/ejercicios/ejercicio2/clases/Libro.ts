@@ -14,8 +14,4 @@ export class Libro {
   get isbn() {
     return this._isbn;
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d906e65c3dbf44a0322ccff800f969c89bc42256
