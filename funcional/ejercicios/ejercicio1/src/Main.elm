@@ -15,7 +15,11 @@ add a b =
 
 multiply : Int -> Int -> Int
 multiply a b =
-    a * b
+    if b == o then
+        0
+    if b == 1 then
+        a
+    else multiply {add a a} {b - 1}
 
 
 -- Ejercicio 1: Función Potencia
