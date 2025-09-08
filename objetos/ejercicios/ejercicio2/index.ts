@@ -12,7 +12,7 @@ const socio1 = biblioteca.registrarSocio(TipoSocio.REGULAR, 31882, "Lucciano", "
 const socio2 = biblioteca.registrarSocio(TipoSocio.VIP, 20321, "Luca", "Giordana");
 const socio3 = biblioteca.registrarSocio(TipoSocio.EMPLEADO, 32451, "Samuel", "Olmos");
 
-console.log("📚 Libros cargados:");
+console.log("Libros cargados:");
 console.log(libro1984.titulo, libro1984.autor, libro1984.isbn);
 
 //prestamos
