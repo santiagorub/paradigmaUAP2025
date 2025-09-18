@@ -106,7 +106,6 @@ sumDigits n =
         1 + sumDigits (absN // 10)
 
 
-
 -- Ejercicio 8: Verificar Palíndromo
 isPalindrome : Int -> Bool
 isPalindrome n =
