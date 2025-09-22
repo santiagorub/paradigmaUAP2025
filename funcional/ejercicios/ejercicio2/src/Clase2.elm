@@ -3,7 +3,11 @@ module Clase2 exposing (..)
 
 head : List a -> a
 head list =
-    Maybe.withDefault (Debug.todo "head called on empty list") (List.head list)
+    case List.head list of
+        Just h ->
+            h
+        Nothing ->
+            Debug.todo "head called on empty list"
 
 
 tail : List a -> List a
@@ -34,8 +38,17 @@ en lugar de usar Maybe. Trabajamos con List en lugar del List de Scala.
 
 concatenar : List Int -> List Int -> List Int
 concatenar lista1 lista2 =
-    []
+    if isEmpty lista1  then lista2
+    else (head lista1) :: concatenar (tail lista1) lista2
 
+------------PRUEBA DE ESCRITORIO------------
+-- concatenar [1,2,3] [4,5,6] -> 1 :: [2,3] [4,5,6]
+-- concatenar [2,3] [4,5,6] -> 2 :: [3] [4,5,6]
+-- concatenar [3] [4,5,6] -> 3 :: [] [4,5,6]
+-- concatenar [] [4,5,6]
+-- 3 :: [4,5,6]
+-- 2 :: [3,4,5,6]
+-- 1 :: [2,3,4,5,6]
 
 
 -- Buscar
@@ -45,7 +58,21 @@ concatenar lista1 lista2 =
 
 buscar : List Int -> (Int -> Int -> Bool) -> Int
 buscar lista com =
-    0
+    if isEmpty lista then
+        0
+    else if (isEmpty (tail lista)) then
+        head lista
+        --si solo tiene 1 elemento
+    else
+        let 
+            h =
+                head lista
+            m =
+                buscar (tail lista) com
+        in
+    if (com h m) then 
+        h
+    else m
 
 
 
@@ -55,7 +82,7 @@ buscar lista com =
 
 max : List Int -> Int
 max lista =
-    0
+    buscar lista (\x y -> x > y )
 
 
 
@@ -65,7 +92,7 @@ max lista =
 
 min : List Int -> Int
 min lista =
-    0
+    buscar lista (\x y -> x< y )
 
 
 
@@ -74,7 +101,10 @@ min lista =
 
 maximos : List Int -> Int -> List Int
 maximos lista e =
-    []
+    filtrar lista (\h -> h > e)
+
+------------PRUEBA DE ESCRITORIO------------
+
 
 
 
@@ -83,7 +113,7 @@ maximos lista e =
 
 minimos : List Int -> Int -> List Int
 minimos lista e =
-    []
+    filtrar lista (\h -> h < e)
 
 
 
@@ -111,7 +141,12 @@ quickSort xs =
 
 obtenerElemento : List Int -> Int -> Int
 obtenerElemento lista posicion =
-    0
+    if isEmpty lista then
+        0
+    else if posicion == 0 then
+        head lista
+    else
+        obtenerElemento (tail lista) (posicion - 1)
 
 
 
@@ -149,8 +184,18 @@ acc lista =
 
 
 filtrar : List Int -> (Int -> Bool) -> List Int
-filtrar xs p =
-    []
+filtrar lista com =
+    if isEmpty lista then
+        lista
+    else
+        let
+            h =
+                head lista
+        in
+    if (com h) then
+        h :: filtrar (tail lista) com
+    else 
+        filtrar (tail lista) com
 
 
 
