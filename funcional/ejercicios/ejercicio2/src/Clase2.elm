@@ -103,10 +103,6 @@ maximos : List Int -> Int -> List Int
 maximos lista e =
     filtrar lista (\h -> h > e)
 
-------------PRUEBA DE ESCRITORIO------------
-
-
-
 
 -- Filtra la lista de valores menores que el valor e pasado por parámetro
 
@@ -127,11 +123,14 @@ quickSort xs =
             []
 
         pivot :: resto ->
-            -- TODO: Implementar quicksort recursivamente
-            -- 1. Dividir resto en menores y mayores que pivot
-            -- 2. Ordenar recursivamente ambas particiones
-            -- 3. Concatenar: (menores ordenados) ++ [pivot] ++ (mayores ordenados)
-            []
+            let
+                menores =
+                    List.filter (\n -> n <= pivot) resto
+
+                mayores =
+                    List.filter (\n -> n > pivot) resto
+            in
+            quickSort menores ++ [ pivot ] ++ quickSort mayores
 
 
 
@@ -158,7 +157,22 @@ obtenerElemento lista posicion =
 
 mediana : List Int -> Int
 mediana lista =
-    0
+    case List.sort lista of
+        [] ->
+            0
+        xs ->
+            let
+                len = List.length xs
+                mitad = len // 2
+            in
+            if modBy 2 len == 1 then
+                Maybe.withDefault 0 (List.head (List.drop mitad xs))
+            else
+                let
+                    izquierda = Maybe.withDefault 0 (List.head (List.drop (mitad - 1) xs))
+                    derecha   = Maybe.withDefault 0 (List.head (List.drop mitad xs))
+                in
+                (izquierda + derecha) // 2
 
 
 
@@ -167,7 +181,7 @@ mediana lista =
 
 contar : List Int -> Int
 contar lista =
-    0
+    List.length lista
 
 
 
@@ -176,8 +190,7 @@ contar lista =
 
 acc : List Int -> Int
 acc lista =
-    0
-
+    List.sum lista
 
 
 -- Filtra los elementos de la lista xs según la función p
@@ -204,8 +217,7 @@ filtrar lista com =
 
 filtrarPares : List Int -> List Int
 filtrarPares xs =
-    -- Pista: Usar modBy 2 para verificar números pares
-    []
+    List.filter (\n -> modBy 2 n == 0) xs
 
 
 
@@ -214,7 +226,7 @@ filtrarPares xs =
 
 filtrarMultiplosDeTres : List Int -> List Int
 filtrarMultiplosDeTres xs =
-    []
+    List.filter (\n -> modBy 3 n == 0) xs
 
 
 
@@ -223,7 +235,7 @@ filtrarMultiplosDeTres xs =
 
 acumular : List Int -> (Int -> Int) -> Int
 acumular lista fx =
-    0
+    List.sum (List.map fx lista)
 
 
 
@@ -233,8 +245,7 @@ acumular lista fx =
 acumularUnidad : List Int -> Int
 acumularUnidad lista =
     -- Pista: (\x -> x)
-    0
-
+    acumular lista (\x -> x)
 
 
 -- Acumula el doble de los elementos de una lista usando acumular
@@ -243,7 +254,7 @@ acumularUnidad lista =
 acumularDoble : List Int -> Int
 acumularDoble lista =
     -- Pista: (\x -> x * 2)
-    0
+    acumular lista (\x -> x * 2)
 
 
 
@@ -253,7 +264,7 @@ acumularDoble lista =
 acumularCuadrado : List Int -> Int
 acumularCuadrado lista =
     -- Pista: (\x -> x * x)
-    0
+    acumular lista (\x -> x * x)
 
 
 
@@ -263,7 +274,7 @@ acumularCuadrado lista =
 
 transformar : List Int -> (Int -> a) -> List a
 transformar lista fx =
-    []
+    List.map fx lista
 
 
 
@@ -272,7 +283,7 @@ transformar lista fx =
 
 existe : List Int -> Int -> Bool
 existe lista nro =
-    False
+    List.any (\x -> x == nro) lista
 
 
 
@@ -282,7 +293,7 @@ existe lista nro =
 unirOfSet : List Int -> List Int -> List Int
 unirOfSet lista otraLista =
     -- Vas a necesitar una función auxiliar para remover duplicados
-    []
+    removerDuplicados (List.append lista otraLista)
 
 
 
@@ -291,10 +302,18 @@ unirOfSet lista otraLista =
 
 removerDuplicados : List Int -> List Int
 removerDuplicados lista =
-    []
+    case lista of
+        [] ->
+            []
+
+        x :: xs ->
+            if List.member x xs then
+                removerDuplicados xs
+            else
+                x :: removerDuplicados xs
 
 
-
+{-
 -- OPCIONAL: Subconjuntos
 -- Dada una lista de enteros, retorna una lista con todos los posibles subconjuntos
 -- Por ejemplo: [1,2,3] -> [[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]]
@@ -361,3 +380,4 @@ ejemplos =
     , "existe [1,2,3] 2 debería devolver True"
     , "existe [1,2,3] 4 debería devolver False"
     ]
+-}
