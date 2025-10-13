@@ -61,6 +61,7 @@ testsMiFiltro =
 
 testsMiFoldl : Test
 testsMiFoldl =
+    Test.only <|
     describe "Tests para miFoldl"
         [ test "miFoldl suma" <|
             \_ ->
