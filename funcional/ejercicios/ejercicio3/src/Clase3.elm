@@ -1,6 +1,5 @@
 module Clase3 exposing (..)
 
-
 head : List a -> a
 head list =
     case List.head list of
@@ -153,7 +152,7 @@ negarTodos lista =
 
 pares : List Int -> List Int
 pares lista =
-    List.filter (\n -> n % 2 == 0) lista
+    List.filter (\n -> remainderBy 2 n == 0) lista
 
 
 
@@ -310,7 +309,7 @@ sumaDeCuadrados lista =
 contarPares : List Int -> Int
 contarPares lista =
     lista
-        |> List.filter (\n -> n % 2 == 0)
+        |> List.filter (\n -> remainderBy 2 n == 0)
         |> List.length
 
 
@@ -372,7 +371,7 @@ duplicarPares : List Int -> List Int
 duplicarPares lista =
     List.map
         (\n ->
-            if n % 2 == 0 then
+            if remainderBy 2 n == 0 then
                 n * 2
             else
                 n
@@ -445,9 +444,7 @@ particionar predicado lista =
 
 sumaAcumulada : List Int -> List Int
 sumaAcumulada lista =
-    case List.scanl (+) 0 lista of
-        [] -> []
-        _ :: resto -> resto
+    []
 
 
 
